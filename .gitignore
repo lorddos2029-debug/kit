@@ -1,0 +1,11 @@
+.env*
+.vercel/
+node_modules/
+*.log
+*.py
+/__l5e/
+/_flock.js
+/favicon.png
+/assets/*.js
+/assets/nutrigold/produto-*.jpg
+/assets/nutrigold/*preview.png

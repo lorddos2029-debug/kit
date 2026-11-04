@@ -1,0 +1,14 @@
+{
+  "name": "primefit",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "qrcode": "1.5.4"
+  },
+  "private": true
+}
