@@ -5,6 +5,7 @@
   let pending = false;
   let previousOrder;
   let reference;
+  let blockedOrder;
 
   form.addEventListener('primefit:generate-pix', async () => {
     if (pending) return;
@@ -16,6 +17,11 @@
         order[field] = form.elements[field].value;
       }
       const fingerprint = JSON.stringify(order);
+      if (blockedOrder === fingerprint) {
+        message.textContent = 'Já houve uma divergência de valor neste pedido. Entre em contato com a loja.';
+        message.focus();
+        return;
+      }
       if (fingerprint !== previousOrder) {
         reference = crypto.randomUUID();
         previousOrder = fingerprint;
@@ -30,6 +36,7 @@
         body: JSON.stringify({ ...order, reference })
       });
       const payment = await response.json();
+      if (payment.code === 'pix_amount_mismatch') blockedOrder = fingerprint;
       if (!response.ok) throw new Error(payment.error);
       sessionStorage.setItem('primefit.pix', JSON.stringify(payment));
       location.assign('/pix');

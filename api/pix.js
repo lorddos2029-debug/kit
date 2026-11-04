@@ -91,9 +91,19 @@ module.exports = async function handler(req, res) {
 
     const charge = await response.json();
     if (!response.ok || !paymentId.test(charge.id || '') || typeof charge.pix?.qr_code !== 'string' ||
-      !charge.pix.qr_code || Number(charge.amount) !== amount) {
+      !charge.pix.qr_code) {
       console.error('PinPay create failed', { status: response.status, reference: order.reference });
       return res.status(502).json({ error: 'A PinPay não confirmou a cobrança. Confira os dados e tente novamente.' });
+    }
+
+    if (Number(charge.amount) !== amount) {
+      console.error('PinPay amount mismatch', {
+        reference: order.reference, expected: amount, received: Number(charge.amount)
+      });
+      return res.status(409).json({
+        code: 'pix_amount_mismatch',
+        error: 'A PinPay retornou um valor diferente do total. O QR Code foi bloqueado. Entre em contato com a loja.'
+      });
     }
 
     const qr = await QRCode.toDataURL(charge.pix.qr_code, { width: 280, margin: 3 });
