@@ -20,6 +20,12 @@
     <section class="ng-step-card">
       <h1>Pagamento via Pix</h1>
       <p id="pix-status" role="status">Carregando pagamento…</p>
+      <section id="pix-order" hidden aria-labelledby="pix-order-title">
+        <h2 id="pix-order-title">Resumo do pedido</h2>
+        <p><strong>Combo Magnésio &amp; Inositol Bodyaction</strong> · 3 latas de 210 g por combo</p>
+        <p>Sabor: <strong id="pix-order-flavor"></strong></p>
+        <p>Quantidade de combos: <strong id="pix-order-quantity"></strong></p>
+      </section>
       <div id="pix-details" hidden>
         <p id="pix-amount"></p>
         <p id="pix-expiration"></p>

@@ -9,6 +9,11 @@
   }
 
   const details = get('pix-details');
+  if (payment.order?.flavor && Number.isInteger(payment.order.quantity)) {
+    get('pix-order-flavor').textContent = payment.order.flavor;
+    get('pix-order-quantity').textContent = payment.order.quantity;
+    get('pix-order').hidden = false;
+  }
   const qr = get('pix-qr');
   qr.src = payment.qr;
   get('pix-code').value = payment.code;

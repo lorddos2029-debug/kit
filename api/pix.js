@@ -109,7 +109,8 @@ module.exports = async function handler(req, res) {
     const qr = await QRCode.toDataURL(charge.pix.qr_code, { width: 280, margin: 3 });
     return res.status(201).json({
       id: charge.id, token: sign(charge.id, secret), amount, code: charge.pix.qr_code,
-      qr, expiresAt: charge.pix.expires_at
+      qr, expiresAt: charge.pix.expires_at,
+      order: { flavor: flavors[order.flavor], quantity: order.quantity }
     });
   } catch {
     return res.status(502).json({ error: 'A comunicação com a PinPay falhou. Tente novamente.' });
